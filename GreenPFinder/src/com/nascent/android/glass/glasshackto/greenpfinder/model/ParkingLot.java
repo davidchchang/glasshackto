@@ -23,6 +23,7 @@ public class ParkingLot {
 
     private final LatLongCoordinate mCoordinate;
     private final String mAddress;
+    private final String mRate;  
     private final int mId;
 
     /**
@@ -32,10 +33,11 @@ public class ParkingLot {
      * @param longitude the longitude of the place
      * @param address the name of the place
      */
-    public ParkingLot(int id, double latitude, double longitude, String address) {
+    public ParkingLot(int id, double latitude, double longitude, String address, String rate) {
         mCoordinate = new LatLongCoordinate(latitude, longitude);
         mAddress = address;
         mId = id;
+        mRate = rate;
     }
 
     /**
@@ -63,6 +65,16 @@ public class ParkingLot {
      */
     public String getAddress() {
         return mAddress;
+    }
+    
+
+    /**
+     * Gets the rate of the parking lot.
+     *
+     * @return the rate of the parking lot
+     */
+    public String getRate() {
+        return mRate;
     }
     
     /**
