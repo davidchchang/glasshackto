@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -72,17 +74,12 @@ public class GreenPSpots {
      * function will never return null.
      */
     public List<ParkingLot> getClosestParkingLots(double latitude, double longitude) {
-        ArrayList<ParkingLot> nearbyPlaces = new ArrayList<ParkingLot>();
-
-        // TODO: fetch list of closest parking lots by distance
-        for (ParkingLot knownPlace : mParkingLots) {
-            if (MathUtils.getDistance(latitude, longitude,
-                    knownPlace.getLatitude(), knownPlace.getLongitude()) <= MAX_DISTANCE_KM) {
-                nearbyPlaces.add(knownPlace);
-            }
-        }
-
-        return nearbyPlaces;
+        LatLongCoordinate referencePoint = new LatLongCoordinate(latitude, longitude);
+        
+        GreenPSpotComparator greenPComparator = new GreenPSpotComparator(referencePoint);
+        Collections.sort(mParkingLots, greenPComparator);
+        
+        return mParkingLots.subList(0, 10);
     }
 
     /**
