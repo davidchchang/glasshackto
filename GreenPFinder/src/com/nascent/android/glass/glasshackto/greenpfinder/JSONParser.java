@@ -17,10 +17,10 @@ public class JSONParser {
 	
 	
 	public Object readJSONFile(Context context, String filename) {
-		
+
 		// TODO: load JSON file into string
 		InputStream contents = context.getResources().openRawResource(R.raw.greenp);
-		
+
 		return parseJSONContents(contents);
 	}
 

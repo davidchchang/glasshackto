@@ -19,10 +19,12 @@ package com.nascent.android.glass.glasshackto.greenpfinder;
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
+import com.nascent.android.glass.glasshackto.greenpfinder.JSONParser;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.Landmarks;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
 import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -84,7 +86,8 @@ public class CompassService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        
+        Context appContext = getApplicationContext();
         // Even though the text-to-speech engine is only used in response to a menu action, we
         // initialize it when the application starts so that we avoid delays that could occur
         // if we waited until it was needed to start it up.
@@ -99,6 +102,9 @@ public class CompassService extends Service {
                 (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         LocationManager locationManager =
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        
+        JSONParser jsonParser = new JSONParser();
+		Object obj = jsonParser.readJSONFile(appContext, "greenp");
 
         mOrientationManager = new OrientationManager(sensorManager, locationManager);
         mLandmarks = new Landmarks(this);
