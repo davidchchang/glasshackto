@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.glass.sample.compass.util;
+package com.nascent.android.glass.glasshackto.greenpfinder.util;
 
 /**
  * A utility class containing arithmetic and geometry helper methods.

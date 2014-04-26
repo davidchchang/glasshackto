@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.android.glass.sample.compass;
+package com.nascent.android.glass.glasshackto.greenpfinder;
 
-import com.google.android.glass.sample.compass.model.Landmarks;
-import com.google.android.glass.sample.compass.model.Place;
-import com.google.android.glass.sample.compass.util.MathUtils;
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
+import com.nascent.android.glass.glasshackto.greenpfinder.R;
+import com.nascent.android.glass.glasshackto.greenpfinder.model.Landmarks;
+import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
+import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.app.PendingIntent;
 import android.app.Service;

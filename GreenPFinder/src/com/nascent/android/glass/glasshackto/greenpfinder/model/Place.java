@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.glass.sample.compass.model;
+package com.nascent.android.glass.glasshackto.greenpfinder.model;
 
 /**
  * This class represents a point of interest that has geographical coordinates (latitude and
