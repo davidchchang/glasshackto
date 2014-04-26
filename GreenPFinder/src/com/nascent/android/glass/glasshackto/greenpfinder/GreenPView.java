@@ -48,7 +48,7 @@ import java.util.List;
  * Draws a stylized compass, with text labels at the cardinal and ordinal directions, and tick
  * marks at the half-winds. The red "needles" in the display mark the current heading.
  */
-public class CompassView extends View {
+public class GreenPView extends View {
 
     /** Various dimensions and other drawing-related constants. */
     private static final float NEEDLE_WIDTH = 10;
@@ -98,15 +98,15 @@ public class CompassView extends View {
     private final String[] mDirections;
     private final ValueAnimator mAnimator;
 
-    public CompassView(Context context) {
+    public GreenPView(Context context) {
         this(context, null, 0);
     }
 
-    public CompassView(Context context, AttributeSet attrs) {
+    public GreenPView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CompassView(Context context, AttributeSet attrs, int defStyle) {
+    public GreenPView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         mPaint = new Paint();
