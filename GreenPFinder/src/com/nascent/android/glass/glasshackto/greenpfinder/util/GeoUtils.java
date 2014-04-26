@@ -32,7 +32,21 @@ public class GeoUtils {
      * @param points list of (latitude, longitude) coordinates
      * @return <LatLongCoordinate> closest point in the list
      */
-    public static LatLongCoordinate closest(LatLongCoordinate origin, ArrayList<LatLongCoordinate> points) {
-        return null;
+    public static LatLongCoordinate closestPoint(LatLongCoordinate origin, ArrayList<LatLongCoordinate> points) {
+    	double latitude1 = origin.getLatitude(),
+    			longitude1 = origin.getLongitude(),
+    			latitude2 = 0, longitude2 = 0, distanceToPoint = 0;
+    	LatLongCoordinate closestPoint = null;
+    	double distanceToClosestPoint = Double.POSITIVE_INFINITY;
+    	
+    	for (LatLongCoordinate latLongCoordinate : points) {
+    		distanceToPoint = MathUtils.getDistance(latitude1, longitude1, latitude2, longitude2); 
+			if (distanceToPoint < distanceToClosestPoint) {
+				distanceToClosestPoint = distanceToPoint;
+				closestPoint = latLongCoordinate;
+			}
+		}
+    	
+        return closestPoint;
     }
 }
