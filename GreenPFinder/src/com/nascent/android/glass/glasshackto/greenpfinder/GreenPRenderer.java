@@ -20,7 +20,6 @@ import com.google.android.glass.timeline.DirectRenderingCallback;
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.GreenPSpots;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.ParkingLot;
-import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -34,7 +33,6 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 

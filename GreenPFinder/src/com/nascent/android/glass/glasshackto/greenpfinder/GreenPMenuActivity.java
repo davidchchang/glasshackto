@@ -17,13 +17,11 @@
 package com.nascent.android.glass.glasshackto.greenpfinder;
 
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
-import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Handler;
