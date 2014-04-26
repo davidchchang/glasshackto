@@ -36,19 +36,19 @@ import java.lang.Runnable;
  * This activity manages the options menu that appears when the user taps on the compass's live
  * card.
  */
-public class CompassMenuActivity extends Activity {
+public class GreenPMenuActivity extends Activity {
 
     private final Handler mHandler = new Handler();
 
-    private CompassService.CompassBinder mCompassService;
+    private GreenPService.GreenPBinder mCompassService;
     private boolean mAttachedToWindow;
     private boolean mOptionsMenuOpen;
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            if (service instanceof CompassService.CompassBinder) {
-                mCompassService = (CompassService.CompassBinder) service;
+            if (service instanceof GreenPService.GreenPBinder) {
+                mCompassService = (GreenPService.GreenPBinder) service;
                 openOptionsMenu();
             }
         }
@@ -62,7 +62,7 @@ public class CompassMenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bindService(new Intent(this, CompassService.class), mConnection, 0);
+        bindService(new Intent(this, GreenPService.class), mConnection, 0);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class CompassMenuActivity extends Activity {
 
                     @Override
                     public void run() {
-                        stopService(new Intent(CompassMenuActivity.this, CompassService.class));
+                        stopService(new Intent(GreenPMenuActivity.this, GreenPService.class));
                     }
                 });
                 return true;

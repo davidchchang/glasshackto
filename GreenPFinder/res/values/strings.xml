@@ -17,7 +17,7 @@
 <resources>
 
     <!-- Launch-related strings. -->
-    <string name="app_name">Compass Sample</string>
+    <string name="app_name">Green P Finder</string>
 
     <!-- Strings describing locations. -->
     <string-array name="direction_abbreviations">
@@ -63,7 +63,7 @@
     </string-array>
 
     <!-- Warning messages. -->
-    <string name="pitch_too_steep">Keep Glass horizontal to use the compass</string>
+    <string name="pitch_too_steep">Keep Glass horizontal to use the Green P finder</string>
     <string name="magnetic_interference">Glass is detecting too much interference</string>
 
     <!-- Menu item strings. -->

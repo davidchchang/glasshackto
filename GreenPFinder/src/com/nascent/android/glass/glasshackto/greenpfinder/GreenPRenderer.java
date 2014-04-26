@@ -42,9 +42,9 @@ import java.util.concurrent.TimeUnit;
  * also manages the lifetime of the sensor and location event listeners (through
  * {@link OrientationManager}) so that tracking only occurs when the card is visible.
  */
-public class CompassRenderer implements DirectRenderingCallback {
+public class GreenPRenderer implements DirectRenderingCallback {
 
-    private static final String TAG = CompassRenderer.class.getSimpleName();
+    private static final String TAG = GreenPRenderer.class.getSimpleName();
 
     /**
      * The (absolute) pitch angle beyond which the compass will display a message telling the user
@@ -68,7 +68,7 @@ public class CompassRenderer implements DirectRenderingCallback {
     private boolean mRenderingPaused;
 
     private final FrameLayout mLayout;
-    private final CompassView mCompassView;
+    private final GreenPView mCompassView;
     private final RelativeLayout mTipsContainer;
     private final TextView mTipsView;
     private final OrientationManager mOrientationManager;
@@ -107,13 +107,13 @@ public class CompassRenderer implements DirectRenderingCallback {
      * Creates a new instance of the {@code CompassRenderer} with the specified context,
      * orientation manager, and landmark collection.
      */
-    public CompassRenderer(Context context, OrientationManager orientationManager,
+    public GreenPRenderer(Context context, OrientationManager orientationManager,
                 Landmarks landmarks) {
         LayoutInflater inflater = LayoutInflater.from(context);
         mLayout = (FrameLayout) inflater.inflate(R.layout.compass, null);
         mLayout.setWillNotDraw(false);
 
-        mCompassView = (CompassView) mLayout.findViewById(R.id.compass);
+        mCompassView = (GreenPView) mLayout.findViewById(R.id.compass);
         mTipsContainer = (RelativeLayout) mLayout.findViewById(R.id.tips_container);
         mTipsView = (TextView) mLayout.findViewById(R.id.tips_view);
 
