@@ -17,6 +17,7 @@
 package com.nascent.android.glass.glasshackto.greenpfinder;
 
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
+import com.nascent.android.glass.glasshackto.greenpfinder.model.ParkingLot;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
 import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
@@ -36,6 +37,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -53,7 +55,7 @@ public class GreenPView extends View {
     /** Various dimensions and other drawing-related constants. */
     private static final float NEEDLE_WIDTH = 10;
     private static final float NEEDLE_HEIGHT = 125;
-    private static final int NEEDLE_COLOR = Color.YELLOW;
+    private static final int FONT_COLOR = Color.WHITE;
     private static final float TICK_WIDTH = 2;
     private static final float TICK_HEIGHT = 10;
     private static final float DIRECTION_TEXT_HEIGHT = 84.0f;
@@ -85,7 +87,7 @@ public class GreenPView extends View {
     private float mAnimatedHeading;
 
     private OrientationManager mOrientation;
-    private List<Place> mNearbyPlaces;
+    private List<ParkingLot> mClosestParkingLot;
 
     private final Paint mPaint;
     private final Paint mTickPaint;
@@ -184,41 +186,92 @@ public class GreenPView extends View {
      * whenever the user's location changes, so that only locations within a certain distance will
      * be displayed.
      *
-     * @param places the list of {@code Place}s that should be displayed
+     * @param parkingLots the list of {@code Place}s that should be displayed
      */
-    public void setNearbyPlaces(List<Place> places) {
-        mNearbyPlaces = places;
+    public void setClosestParkingLots(List<ParkingLot> parkingLots) {
+        mClosestParkingLot = parkingLots;
+        invalidate();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
 
-        // The view displays 90 degrees across its width so that one 90 degree head rotation is
-        // equal to one full view cycle.
-        float pixelsPerDegree = getWidth() / 90.0f;
-        float centerX = getWidth() / 2.0f;
-        float centerY = getHeight() / 2.0f;
+		// The view displays 90 degrees across its width so that one 90 degree
+		// head rotation is
+		// equal to one full view cycle.
+		float pixelsPerDegree = getWidth() / 90.0f;
+		float centerX = getWidth() / 2.0f;
+		float centerY = getHeight() / 2.0f;
 
-        canvas.save();
-        canvas.translate(-mAnimatedHeading * pixelsPerDegree + centerX, centerY);
+		// canvas.save();
+		// canvas.translate(-mAnimatedHeading * pixelsPerDegree + centerX,
+		// centerY);
+		//
+		// // In order to ensure that places on a boundary close to 0 or 360 get
+		// drawn correctly, we
+		// // draw them three times; once to the left, once at the "true"
+		// bearing, and once to the
+		// // right.
+		// for (int i = -1; i <= 1; i++) {
+		// drawPlaces(canvas, pixelsPerDegree, i * pixelsPerDegree * 360);
+		// }
+		//
+		// drawCompassDirections(canvas, pixelsPerDegree);
+		//
+		// canvas.restore();
 
-        // In order to ensure that places on a boundary close to 0 or 360 get drawn correctly, we
-        // draw them three times; once to the left, once at the "true" bearing, and once to the
-        // right.
-        for (int i = -1; i <= 1; i++) {
-            drawPlaces(canvas, pixelsPerDegree, i * pixelsPerDegree * 360);
+		mPaint.setTextSize(48);
+		mPaint.setColor(FONT_COLOR);
+
+		double latitude1 = 0, longitude1 = 0;
+
+		try {
+			Location userLocation = mOrientation.getLocation();
+			latitude1 = userLocation.getLatitude();
+			longitude1 = userLocation.getLongitude();
+		} catch (Exception e) {
+			Log.d("Error", String.format("%s", e.getMessage()));
+		}
+
+		String direction = "Your coordinate is: \n" + latitude1 + ", "
+				+ longitude1;
+		mPaint.getTextBounds(direction, 0, direction.length(), mTextBounds);
+
+		drawMultilineText(direction, 0, mTextBounds.height(), mPaint, canvas);
+
+		// TODO: find closest green P parking lot
+		// direction = "Your closest Green P Parking lot is: ";
+		// mPaint.getTextBounds(direction, 0, direction.length(), mTextBounds);
+
+		// canvas.drawText(direction,
+		// 0,
+		// 100 + mTextBounds.height() / 2, mPaint);
+
+		// String direction = mDirections[MathUtils.mod(i, mDirections.length)];
+		// mPaint.getTextBounds(direction, 0, direction.length(), mTextBounds);
+		//
+		// canvas.drawText(direction,
+		// i * degreesPerTick * pixelsPerDegree - mTextBounds.width() / 2,
+		// mTextBounds.height() / 2, mPaint);
+
+	}
+
+    private void drawMultilineText(String str, int x, int y, Paint paint, Canvas canvas) {
+        int      lineHeight = 0;
+        int      yoffset    = 0;
+        String[] lines      = str.split("\n");
+
+        // set height of each line (height of text + 20%)
+        paint.getTextBounds("Ig", 0, 2, mTextBounds);
+        lineHeight = (int) ((float) mTextBounds.height() * 1.2);
+        // draw each line
+        for (int i = 0; i < lines.length; ++i) {
+            canvas.drawText(lines[i], x, y + yoffset, paint);
+            yoffset = yoffset + lineHeight;
         }
-
-        drawCompassDirections(canvas, pixelsPerDegree);
-
-        canvas.restore();
-
-        mPaint.setColor(NEEDLE_COLOR);
-        drawNeedle(canvas, false);
-        drawNeedle(canvas, true);
     }
-
+    
     /**
      * Draws the compass direction strings (N, NW, W, etc.).
      *
@@ -258,8 +311,8 @@ public class GreenPView extends View {
      *         direction; used because place names are drawn three times to get proper wraparound
      */
     private void drawPlaces(Canvas canvas, float pixelsPerDegree, float offset) {
-        if (mOrientation.hasLocation() && mNearbyPlaces != null) {
-            synchronized (mNearbyPlaces) {
+        if (mOrientation.hasLocation() && mClosestParkingLot != null) {
+            synchronized (mClosestParkingLot) {
                 Location userLocation = mOrientation.getLocation();
                 double latitude1 = userLocation.getLatitude();
                 double longitude1 = userLocation.getLongitude();
@@ -270,13 +323,13 @@ public class GreenPView extends View {
                 // location), and compute the relative bearing from the user's location to the
                 // place's location. This determines the position on the compass view where the
                 // pin will be drawn.
-                for (Place place : mNearbyPlaces) {
-                    double latitude2 = place.getLatitude();
-                    double longitude2 = place.getLongitude();
+                for (ParkingLot parkingLot : mClosestParkingLot) {
+                    double latitude2 = parkingLot.getLatitude();
+                    double longitude2 = parkingLot.getLongitude();
                     float bearing = MathUtils.getBearing(latitude1, longitude1, latitude2,
                             longitude2);
 
-                    String name = place.getName();
+                    String name = parkingLot.getAddress();
                     double distanceKm = MathUtils.getDistance(latitude1, longitude1, latitude2,
                             longitude2);
                     String text = getContext().getResources().getString(

@@ -20,7 +20,7 @@ import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
 import com.nascent.android.glass.glasshackto.greenpfinder.JSONParser;
-import com.nascent.android.glass.glasshackto.greenpfinder.model.Landmarks;
+import com.nascent.android.glass.glasshackto.greenpfinder.model.GreenPSpots;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
 import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
@@ -77,7 +77,7 @@ public class GreenPService extends Service {
     private final GreenPBinder mBinder = new GreenPBinder();
 
     private OrientationManager mOrientationManager;
-    private Landmarks mLandmarks;
+    private GreenPSpots mLandmarks;
     private TextToSpeech mSpeech;
 
     private LiveCard mLiveCard;
@@ -107,7 +107,7 @@ public class GreenPService extends Service {
 		Object obj = jsonParser.readJSONFile(appContext, "greenp");
 
         mOrientationManager = new OrientationManager(sensorManager, locationManager);
-        mLandmarks = new Landmarks(this);
+        mLandmarks = new GreenPSpots(this);
     }
 
     @Override

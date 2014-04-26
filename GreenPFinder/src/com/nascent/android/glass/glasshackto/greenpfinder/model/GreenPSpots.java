@@ -34,12 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides access to a list of hard-coded landmarks (located in
+ * This class provides access to a list of hard-coded Green P spots (located in
  * {@code res/raw/landmarks.json}) that will appear on the compass when the user is near them.
  */
-public class Landmarks {
+public class GreenPSpots {
 
-    private static final String TAG = Landmarks.class.getSimpleName();
+    private static final String TAG = GreenPSpots.class.getSimpleName();
 
     /**
      * The threshold used to display a landmark on the compass.
@@ -47,16 +47,16 @@ public class Landmarks {
     private static final double MAX_DISTANCE_KM = 10;
 
     /**
-     * The list of landmarks loaded from resources.
+     * The list of Green P parking lots loaded from resources.
      */
-    private final ArrayList<Place> mPlaces;
+    private final ArrayList<ParkingLot> mParkingLots;
 
     /**
-     * Initializes a new {@code Landmarks} object by loading the landmarks from the resource
+     * Initializes a new {@code ParkingLot} object by loading the parking lots from the resource
      * bundle.
      */
-    public Landmarks(Context context) {
-        mPlaces = new ArrayList<Place>();
+    public GreenPSpots(Context context) {
+        mParkingLots = new ArrayList<ParkingLot>();
 
         // This class will be instantiated on the service's main thread, and doing I/O on the
         // main thread can be dangerous if it will block for a noticeable amount of time. In
@@ -68,14 +68,14 @@ public class Landmarks {
     }
 
     /**
-     * Gets a list of landmarks that are within ten kilometers of the specified coordinates. This
-     * function will never return null; if there are no locations within that threshold, then an
-     * empty list will be returned.
+     * Gets a list of the ten closest nearby parking lots. This 
+     * function will never return null.
      */
-    public List<Place> getNearbyLandmarks(double latitude, double longitude) {
-        ArrayList<Place> nearbyPlaces = new ArrayList<Place>();
+    public List<ParkingLot> getClosestParkingLots(double latitude, double longitude) {
+        ArrayList<ParkingLot> nearbyPlaces = new ArrayList<ParkingLot>();
 
-        for (Place knownPlace : mPlaces) {
+        // TODO: fetch list of closest parking lots by distance
+        for (ParkingLot knownPlace : mParkingLots) {
             if (MathUtils.getDistance(latitude, longitude,
                     knownPlace.getLatitude(), knownPlace.getLongitude()) <= MAX_DISTANCE_KM) {
                 nearbyPlaces.add(knownPlace);
@@ -98,9 +98,9 @@ public class Landmarks {
             if (array != null) {
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject object = array.optJSONObject(i);
-                    Place place = jsonObjectToPlace(object);
-                    if (place != null) {
-                        mPlaces.add(place);
+                    ParkingLot parkingLot = jsonObjectToParkingLot(object);
+                    if (parkingLot != null) {
+                        mParkingLots.add(parkingLot);
                     }
                 }
             }
@@ -112,13 +112,13 @@ public class Landmarks {
     /**
      * Converts a JSON object that represents a place into a {@link Place} object.
      */
-    private Place jsonObjectToPlace(JSONObject object) {
+    private ParkingLot jsonObjectToParkingLot(JSONObject object) {
         String name = object.optString("name");
         double latitude = object.optDouble("latitude", Double.NaN);
         double longitude = object.optDouble("longitude", Double.NaN);
 
         if (!name.isEmpty() && !Double.isNaN(latitude) && !Double.isNaN(longitude)) {
-            return new Place(latitude, longitude, name);
+            return new ParkingLot(0, latitude, longitude, name, "");
         } else {
             return null;
         }

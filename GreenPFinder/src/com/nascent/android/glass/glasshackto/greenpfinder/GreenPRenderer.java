@@ -18,7 +18,8 @@ package com.nascent.android.glass.glasshackto.greenpfinder;
 
 import com.google.android.glass.timeline.DirectRenderingCallback;
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
-import com.nascent.android.glass.glasshackto.greenpfinder.model.Landmarks;
+import com.nascent.android.glass.glasshackto.greenpfinder.model.GreenPSpots;
+import com.nascent.android.glass.glasshackto.greenpfinder.model.ParkingLot;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
 
 import android.content.Context;
@@ -68,18 +69,18 @@ public class GreenPRenderer implements DirectRenderingCallback {
     private boolean mRenderingPaused;
 
     private final FrameLayout mLayout;
-    private final GreenPView mCompassView;
+    private final GreenPView mGreenPView;
     private final RelativeLayout mTipsContainer;
     private final TextView mTipsView;
     private final OrientationManager mOrientationManager;
-    private final Landmarks mLandmarks;
+    private final GreenPSpots mGreenPSpots;
 
-    private final OrientationManager.OnChangedListener mCompassListener =
+    private final OrientationManager.OnChangedListener mChangeListener =
             new OrientationManager.OnChangedListener() {
 
         @Override
         public void onOrientationChanged(OrientationManager orientationManager) {
-            mCompassView.setHeading(orientationManager.getHeading());
+            mGreenPView.setHeading(orientationManager.getHeading());
 
             boolean oldTooSteep = mTooSteep;
             mTooSteep = (Math.abs(orientationManager.getPitch()) > TOO_STEEP_PITCH_DEGREES);
@@ -91,9 +92,9 @@ public class GreenPRenderer implements DirectRenderingCallback {
         @Override
         public void onLocationChanged(OrientationManager orientationManager) {
             Location location = orientationManager.getLocation();
-            List<Place> places = mLandmarks.getNearbyLandmarks(
+            List<ParkingLot> parkingLots = mGreenPSpots.getClosestParkingLots(
                     location.getLatitude(), location.getLongitude());
-            mCompassView.setNearbyPlaces(places);
+            mGreenPView.setClosestParkingLots(parkingLots);
         }
 
         @Override
@@ -108,19 +109,19 @@ public class GreenPRenderer implements DirectRenderingCallback {
      * orientation manager, and landmark collection.
      */
     public GreenPRenderer(Context context, OrientationManager orientationManager,
-                Landmarks landmarks) {
+                GreenPSpots landmarks) {
         LayoutInflater inflater = LayoutInflater.from(context);
         mLayout = (FrameLayout) inflater.inflate(R.layout.compass, null);
         mLayout.setWillNotDraw(false);
 
-        mCompassView = (GreenPView) mLayout.findViewById(R.id.compass);
+        mGreenPView = (GreenPView) mLayout.findViewById(R.id.compass);
         mTipsContainer = (RelativeLayout) mLayout.findViewById(R.id.tips_container);
         mTipsView = (TextView) mLayout.findViewById(R.id.tips_view);
 
         mOrientationManager = orientationManager;
-        mLandmarks = landmarks;
+        mGreenPSpots = landmarks;
 
-        mCompassView.setOrientationManager(mOrientationManager);
+        mGreenPView.setOrientationManager(mOrientationManager);
     }
 
     @Override
@@ -159,14 +160,14 @@ public class GreenPRenderer implements DirectRenderingCallback {
 
         if (shouldRender != isRendering) {
             if (shouldRender) {
-                mOrientationManager.addOnChangedListener(mCompassListener);
+                mOrientationManager.addOnChangedListener(mChangeListener);
                 mOrientationManager.start();
 
                 if (mOrientationManager.hasLocation()) {
                     Location location = mOrientationManager.getLocation();
-                    List<Place> nearbyPlaces = mLandmarks.getNearbyLandmarks(
+                    List<ParkingLot> nearbyPlaces = mGreenPSpots.getClosestParkingLots(
                         location.getLatitude(), location.getLongitude());
-                    mCompassView.setNearbyPlaces(nearbyPlaces);
+                    mGreenPView.setClosestParkingLots(nearbyPlaces);
                 }
 
                 mRenderThread = new RenderThread();
@@ -175,7 +176,7 @@ public class GreenPRenderer implements DirectRenderingCallback {
                 mRenderThread.quit();
                 mRenderThread = null;
 
-                mOrientationManager.removeOnChangedListener(mCompassListener);
+                mOrientationManager.removeOnChangedListener(mChangeListener);
                 mOrientationManager.stop();
 
             }
