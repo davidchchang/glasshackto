@@ -110,12 +110,14 @@ public class GreenPSpots {
      * Converts a JSON object that represents a place into a {@link Place} object.
      */
     private ParkingLot jsonObjectToParkingLot(JSONObject object) {
-        String name = object.optString("name");
-        double latitude = object.optDouble("latitude", Double.NaN);
-        double longitude = object.optDouble("longitude", Double.NaN);
+    	int id = object.optInt("id");
+        String name = object.optString("address");
+        String rate = object.optString("rate");
+        double latitude = object.optDouble("lat", Double.NaN);
+        double longitude = object.optDouble("lng", Double.NaN);
 
         if (!name.isEmpty() && !Double.isNaN(latitude) && !Double.isNaN(longitude)) {
-            return new ParkingLot(0, latitude, longitude, name, "");
+            return new ParkingLot(id, latitude, longitude, name, rate);
         } else {
             return null;
         }

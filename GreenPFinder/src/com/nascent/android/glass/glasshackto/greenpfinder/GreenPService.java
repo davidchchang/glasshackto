@@ -19,7 +19,6 @@ package com.nascent.android.glass.glasshackto.greenpfinder;
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
-import com.nascent.android.glass.glasshackto.greenpfinder.JSONParser;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.GreenPSpots;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
 import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
@@ -102,9 +101,6 @@ public class GreenPService extends Service {
                 (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         LocationManager locationManager =
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        
-        JSONParser jsonParser = new JSONParser();
-		Object obj = jsonParser.readJSONFile(appContext, "greenp");
 
         mOrientationManager = new OrientationManager(sensorManager, locationManager);
         mLandmarks = new GreenPSpots(this);
