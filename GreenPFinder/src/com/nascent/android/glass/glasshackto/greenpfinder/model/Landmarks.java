@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.android.glass.sample.compass.model;
+package com.nascent.android.glass.glasshackto.greenpfinder.model;
 
-import com.google.android.glass.sample.compass.R;
-import com.google.android.glass.sample.compass.util.MathUtils;
+import com.nascent.android.glass.glasshackto.greenpfinder.R;
+import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.content.Context;
 import android.util.Log;

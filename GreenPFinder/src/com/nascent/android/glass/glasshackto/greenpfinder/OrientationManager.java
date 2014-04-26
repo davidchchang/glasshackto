@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.android.glass.sample.compass;
+package com.nascent.android.glass.glasshackto.greenpfinder;
 
-import com.google.android.glass.sample.compass.util.MathUtils;
+import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.content.Context;
 import android.hardware.GeomagneticField;

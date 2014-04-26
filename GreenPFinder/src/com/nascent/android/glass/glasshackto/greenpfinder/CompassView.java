@@ -14,10 +14,11 @@
  * the License.
  */
 
-package com.google.android.glass.sample.compass;
+package com.nascent.android.glass.glasshackto.greenpfinder;
 
-import com.google.android.glass.sample.compass.model.Place;
-import com.google.android.glass.sample.compass.util.MathUtils;
+import com.nascent.android.glass.glasshackto.greenpfinder.R;
+import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
+import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -52,7 +53,7 @@ public class CompassView extends View {
     /** Various dimensions and other drawing-related constants. */
     private static final float NEEDLE_WIDTH = 10;
     private static final float NEEDLE_HEIGHT = 125;
-    private static final int NEEDLE_COLOR = Color.GREEN;
+    private static final int NEEDLE_COLOR = Color.YELLOW;
     private static final float TICK_WIDTH = 2;
     private static final float TICK_HEIGHT = 10;
     private static final float DIRECTION_TEXT_HEIGHT = 84.0f;
