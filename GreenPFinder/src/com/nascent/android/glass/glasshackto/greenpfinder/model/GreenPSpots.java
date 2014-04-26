@@ -17,7 +17,6 @@
 package com.nascent.android.glass.glasshackto.greenpfinder.model;
 
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
-import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.content.Context;
 import android.util.Log;
@@ -31,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

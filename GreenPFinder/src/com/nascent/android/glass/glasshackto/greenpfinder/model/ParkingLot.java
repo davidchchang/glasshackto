@@ -85,4 +85,8 @@ public class ParkingLot {
     public int getId() {
         return mId;
     }
+    
+    public String toString() {
+    	return this.getAddress() + " (" + this.getLatitude() + ", " + this.getLongitude() + ")";
+    }
 }

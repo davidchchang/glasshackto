@@ -97,7 +97,6 @@ public class GreenPView extends View {
     private final Rect mTextBounds;
     private final List<Rect> mAllBounds;
     private final NumberFormat mDistanceFormat;
-    private final String[] mDirections;
     private final ValueAnimator mAnimator;
 
     public GreenPView(Context context) {
@@ -145,8 +144,6 @@ public class GreenPView extends View {
         // instead of spinning from a default value of 0.
         mAnimatedHeading = Float.NaN;
 
-        mDirections = context.getResources().getStringArray(R.array.direction_abbreviations);
-
         mAnimator = new ValueAnimator();
         setupAnimator();
     }
@@ -190,6 +187,8 @@ public class GreenPView extends View {
      */
     public void setClosestParkingLots(List<ParkingLot> parkingLots) {
         mClosestParkingLot = parkingLots;
+        Log.d("Test", "Closest parking lot: " + mClosestParkingLot.get(0).toString());
+        System.out.println(mClosestParkingLot.get(0).toString());
         invalidate();
     }
 
