@@ -109,7 +109,7 @@ public class GreenPRenderer implements DirectRenderingCallback {
     public GreenPRenderer(Context context, OrientationManager orientationManager,
                 GreenPSpots landmarks) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        mLayout = (FrameLayout) inflater.inflate(R.layout.compass, null);
+        mLayout = (FrameLayout) inflater.inflate(R.layout.greenp, null);
         mLayout.setWillNotDraw(false);
 
         mGreenPView = (GreenPView) mLayout.findViewById(R.id.compass);

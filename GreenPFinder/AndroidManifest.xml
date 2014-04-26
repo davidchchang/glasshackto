@@ -48,7 +48,7 @@
             </intent-filter>
             <meta-data
                 android:name="com.google.android.glass.VoiceTrigger"
-                android:resource="@xml/compass_show" />
+                android:resource="@xml/parking_find" />
         </service>
 
     </application>
