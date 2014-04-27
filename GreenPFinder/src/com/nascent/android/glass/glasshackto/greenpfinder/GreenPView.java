@@ -277,7 +277,7 @@ public class GreenPView extends View {
      * @param canvas the {@link Canvas} upon which to draw
      * @param pixelsPerDegree the size, in pixels, of one degree step
      */
-    private void drawCompassDirections(Canvas canvas, float pixelsPerDegree) {
+/*    private void drawCompassDirections(Canvas canvas, float pixelsPerDegree) {
         float degreesPerTick = 360.0f / mDirections.length;
 
         mPaint.setColor(Color.WHITE);
@@ -300,7 +300,7 @@ public class GreenPView extends View {
             }
         }
     }
-
+*/
     /**
      * Draws the pins and text labels for the nearby list of places.
      *
