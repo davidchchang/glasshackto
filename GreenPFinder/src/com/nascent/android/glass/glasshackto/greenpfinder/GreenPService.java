@@ -20,7 +20,6 @@ import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.GreenPSpots;
-import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
 import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.app.Activity;

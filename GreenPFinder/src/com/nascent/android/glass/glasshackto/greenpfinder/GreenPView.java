@@ -17,8 +17,8 @@
 package com.nascent.android.glass.glasshackto.greenpfinder;
 
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
+
 import com.nascent.android.glass.glasshackto.greenpfinder.model.ParkingLot;
-import com.nascent.android.glass.glasshackto.greenpfinder.model.Place;
 import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.animation.Animator;
