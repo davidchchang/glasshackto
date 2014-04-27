@@ -85,7 +85,7 @@ public class GreenPMenuActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.compass, menu);
+        getMenuInflater().inflate(R.menu.greenp, menu);
         return true;
     }
 
