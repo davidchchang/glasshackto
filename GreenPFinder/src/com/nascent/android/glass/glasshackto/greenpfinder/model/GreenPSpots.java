@@ -63,7 +63,7 @@ public class GreenPSpots {
         // this case, we assume that the landmark data will be small enough that there is not
         // a significant penalty to the application. If the landmark data were much larger,
         // we may want to load it in the background instead.
-        String jsonString = readLandmarksResource(context);
+        String jsonString = readGreenPResource(context);
         populatePlaceList(jsonString);
     }
 
@@ -88,7 +88,7 @@ public class GreenPSpots {
     private void populatePlaceList(String jsonString) {
         try {
             JSONObject json = new JSONObject(jsonString);
-            JSONArray array = json.optJSONArray("landmarks");
+            JSONArray array = json.optJSONArray("carparks");
 
             if (array != null) {
                 for (int i = 0; i < array.length(); i++) {
@@ -124,8 +124,8 @@ public class GreenPSpots {
     /**
      * Reads the text from {@code res/raw/landmarks.json} and returns it as a string.
      */
-    private static String readLandmarksResource(Context context) {
-        InputStream is = context.getResources().openRawResource(R.raw.landmarks);
+    private static String readGreenPResource(Context context) {
+        InputStream is = context.getResources().openRawResource(R.raw.greenp);
         StringBuffer buffer = new StringBuffer();
 
         try {
