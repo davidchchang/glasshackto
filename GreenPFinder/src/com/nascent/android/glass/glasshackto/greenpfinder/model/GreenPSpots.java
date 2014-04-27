@@ -17,6 +17,7 @@
 package com.nascent.android.glass.glasshackto.greenpfinder.model;
 
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
+import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.content.Context;
 import android.util.Log;
@@ -72,12 +73,27 @@ public class GreenPSpots {
      * function will never return null.
      */
     public List<ParkingLot> getClosestParkingLots(double latitude, double longitude) {
-        LatLongCoordinate referencePoint = new LatLongCoordinate(latitude, longitude);
-        
-        GreenPSpotComparator greenPComparator = new GreenPSpotComparator(referencePoint);
-        Collections.sort(mParkingLots, greenPComparator);
-        
-        return mParkingLots.subList(0, 10);
+		synchronized (mParkingLots) {
+			ArrayList<ParkingLot> clone = new ArrayList<ParkingLot>(
+					mParkingLots);
+
+			Log.d("getClosestParkingLots", "in method");
+
+			for (ParkingLot parkingLot : clone) {
+				parkingLot.setDistanceFromReferencePoint(MathUtils.getDistance(
+						latitude, longitude, parkingLot.getLatitude(),
+						parkingLot.getLongitude()));
+			}
+
+			Log.d("getClosestParkingLots", "finished setting distances");
+
+//			GreenPSpotComparator greenPComparator = new GreenPSpotComparator();
+//			Collections.sort(clone, greenPComparator);
+
+			Log.d("getClosestParkingLots", "finished sorting");
+
+			return clone.subList(0, 10);
+    	}
     }
 
     /**

@@ -1,26 +1,21 @@
 package com.nascent.android.glass.glasshackto.greenpfinder.model;
 
 import java.util.Comparator;
+import java.util.Date;
 
-import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
+import android.util.Log;
 
 public class GreenPSpotComparator implements Comparator<ParkingLot> {
-
-	LatLongCoordinate mReferencePoint;
 	
-	public GreenPSpotComparator(LatLongCoordinate referencePoint) {
-		mReferencePoint = referencePoint;
+	public GreenPSpotComparator() {
 	}
 	
 	@Override
 	public int compare(ParkingLot arg0, ParkingLot arg1) {
-		if (mReferencePoint != null && mReferencePoint.getLatitude() != Double.NaN && mReferencePoint.getLongitude() != Double.NaN) {
-			return (int) (MathUtils.getDistance(mReferencePoint.getLatitude(), mReferencePoint.getLongitude(), 
-					arg0.getLatitude(), arg0.getLongitude()) 
-					- MathUtils.getDistance(mReferencePoint.getLatitude(), mReferencePoint.getLongitude(), 
-					arg1.getLatitude(), arg1.getLongitude()));			
-		}
-		return 0;
+		Log.d("test", "sorting " + new Date());
+		float distance1 = arg0.getDistanceFromReferencePoint();
+		float distance2 = arg1.getDistanceFromReferencePoint();
+		return (int) (distance1 - distance2);
 	}
 
 }

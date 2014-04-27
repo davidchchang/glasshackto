@@ -25,6 +25,9 @@ public class ParkingLot {
     private final String mAddress;
     private final String mRate;  
     private final int mId;
+    
+    // for sorting/caching performance
+    private float mDistanceFromReferencePoint;
 
     /**
      * Initializes a new place with the specified coordinates and name.
@@ -84,6 +87,14 @@ public class ParkingLot {
      */
     public int getId() {
         return mId;
+    }
+    
+    public float getDistanceFromReferencePoint() {
+    	return mDistanceFromReferencePoint;
+    }
+    
+    public void setDistanceFromReferencePoint(float f) {
+    	mDistanceFromReferencePoint = f;
     }
     
     public String toString() {
