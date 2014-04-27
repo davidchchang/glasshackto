@@ -20,7 +20,7 @@
     android:background="@android:color/black">
 
     <com.nascent.android.glass.glasshackto.greenpfinder.GreenPView
-        android:id="@+id/compass"
+        android:id="@+id/greenp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

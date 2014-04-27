@@ -85,6 +85,9 @@ public class GreenPService extends Service {
     public void onCreate() {
         super.onCreate();
         
+        // TODO: remove in production
+        android.os.Debug.waitForDebugger();
+        
         Context appContext = getApplicationContext();
         // Even though the text-to-speech engine is only used in response to a menu action, we
         // initialize it when the application starts so that we avoid delays that could occur

@@ -14,4 +14,12 @@
      limitations under the License.
 -->
 
-<trigger command="FIND_PARKING" />
+<!-- TODO: must use a built-in static voice command prior to release
+http://stackoverflow.com/questions/23097828/why-is-my-voice-command-missing-from-the-ok-glass-menu-in-xe16 
+
+https://developers.google.com/glass/develop/gdk/starting-glassware#unlisted_commands
+-->
+<trigger keyword="@string/glass_voice_trigger" />
+<!-- trigger keyword="@string/glass_voice_trigger">
+    <input prompt="@string/glass_voice_prompt" />
+</trigger -->

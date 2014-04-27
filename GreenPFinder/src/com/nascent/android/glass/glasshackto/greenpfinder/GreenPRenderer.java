@@ -112,7 +112,7 @@ public class GreenPRenderer implements DirectRenderingCallback {
         mLayout = (FrameLayout) inflater.inflate(R.layout.greenp, null);
         mLayout.setWillNotDraw(false);
 
-        mGreenPView = (GreenPView) mLayout.findViewById(R.id.compass);
+        mGreenPView = (GreenPView) mLayout.findViewById(R.id.greenp);
         mTipsContainer = (RelativeLayout) mLayout.findViewById(R.id.tips_container);
         mTipsView = (TextView) mLayout.findViewById(R.id.tips_view);
 
