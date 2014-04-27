@@ -14,10 +14,13 @@ public class GreenPSpotComparator implements Comparator<ParkingLot> {
 	
 	@Override
 	public int compare(ParkingLot arg0, ParkingLot arg1) {
-		return (int) (MathUtils.getDistance(mReferencePoint.getLatitude(), mReferencePoint.getLongitude(), 
-				arg0.getLatitude(), arg0.getLongitude()) 
-				- MathUtils.getDistance(mReferencePoint.getLatitude(), mReferencePoint.getLongitude(), 
-				arg1.getLatitude(), arg1.getLongitude()));
+		if (mReferencePoint != null && mReferencePoint.getLatitude() != Double.NaN && mReferencePoint.getLongitude() != Double.NaN) {
+			return (int) (MathUtils.getDistance(mReferencePoint.getLatitude(), mReferencePoint.getLongitude(), 
+					arg0.getLatitude(), arg0.getLongitude()) 
+					- MathUtils.getDistance(mReferencePoint.getLatitude(), mReferencePoint.getLongitude(), 
+					arg1.getLatitude(), arg1.getLongitude()));			
+		}
+		return 0;
 	}
 
 }

@@ -89,10 +89,15 @@ public class GreenPRenderer implements DirectRenderingCallback {
 
         @Override
         public void onLocationChanged(OrientationManager orientationManager) {
-            Location location = orientationManager.getLocation();
-            List<ParkingLot> parkingLots = mGreenPSpots.getClosestParkingLots(
-                    location.getLatitude(), location.getLongitude());
-            mGreenPView.setClosestParkingLots(parkingLots);
+        	Log.d("greenp", "onLocationChanged");
+			if (orientationManager.hasLocation()) {
+				Location location = orientationManager.getLocation();
+				Log.d("greenp", "location available: " + location.getLatitude() + ", " + location.getLongitude());
+				List<ParkingLot> parkingLots = mGreenPSpots
+						.getClosestParkingLots(location.getLatitude(),
+								location.getLongitude());
+				mGreenPView.setClosestParkingLots(parkingLots);
+			}
         }
 
         @Override
