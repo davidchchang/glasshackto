@@ -14,7 +14,13 @@ public class GreenPSpotComparator implements Comparator<ParkingLot> {
 	public int compare(ParkingLot arg0, ParkingLot arg1) {
 		float distance1 = arg0.getDistanceFromReferencePoint();
 		float distance2 = arg1.getDistanceFromReferencePoint();
-		return (int) (distance1 - distance2);
+		float difference = distance1 - distance2;
+		if (difference > 0) {
+			return 1;
+		} else if (difference < 0) {
+			return -1;
+		}
+		return 0;
 	}
 
 }
