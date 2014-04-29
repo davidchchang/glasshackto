@@ -20,6 +20,7 @@ import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.LiveCard.PublishMode;
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.GreenPSpots;
+import com.nascent.android.glass.glasshackto.greenpfinder.model.ParkingLot;
 import com.nascent.android.glass.glasshackto.greenpfinder.util.MathUtils;
 
 import android.app.Activity;
@@ -76,7 +77,7 @@ public class GreenPService extends Service {
     private final GreenPBinder mBinder = new GreenPBinder();
 
     private OrientationManager mOrientationManager;
-    private GreenPSpots mLandmarks;
+    private GreenPSpots mParkingSpots;
     private TextToSpeech mSpeech;
 
     private LiveCard mLiveCard;
@@ -87,7 +88,7 @@ public class GreenPService extends Service {
         super.onCreate();
         
         // TODO: remove in production
-        android.os.Debug.waitForDebugger();
+//        android.os.Debug.waitForDebugger();
         
         Context appContext = getApplicationContext();
         // Even though the text-to-speech engine is only used in response to a menu action, we
@@ -106,7 +107,7 @@ public class GreenPService extends Service {
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         mOrientationManager = new OrientationManager(sensorManager, locationManager);
-        mLandmarks = new GreenPSpots(this);
+        mParkingSpots = new GreenPSpots(this);
     }
 
     @Override
@@ -118,14 +119,14 @@ public class GreenPService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (mLiveCard == null) {
             mLiveCard = new LiveCard(this, LIVE_CARD_TAG);
-            mRenderer = new GreenPRenderer(this, mOrientationManager, mLandmarks);
+            mRenderer = new GreenPRenderer(this, mOrientationManager, mParkingSpots, mLiveCard);
 
             mLiveCard.setDirectRenderingEnabled(true).getSurfaceHolder().addCallback(mRenderer);
 
             // Display the options menu when the live card is tapped.
+            ParkingLot closestParkingLot = mParkingSpots.getParkingLots().get(0);
             Intent navIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("google.navigation:ll=37.4219795,-122.0836669&title=Googleplex"));
-            
+                    Uri.parse("google.navigation:ll=" + closestParkingLot.getLatitude() + "," + closestParkingLot.getLongitude() + "&title=" + closestParkingLot.getAddress()));
 //            Intent menuIntent = new Intent(this, GreenPMenuActivity.class);
 //            menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             mLiveCard.setAction(PendingIntent.getActivity(this, 0, navIntent, 0));
@@ -149,7 +150,7 @@ public class GreenPService extends Service {
 
         mSpeech = null;
         mOrientationManager = null;
-        mLandmarks = null;
+        mParkingSpots = null;
 
         super.onDestroy();
     }

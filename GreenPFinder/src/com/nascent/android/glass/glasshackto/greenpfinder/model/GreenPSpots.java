@@ -74,12 +74,10 @@ public class GreenPSpots {
      */
     public List<ParkingLot> getClosestParkingLots(double latitude, double longitude) {
 		synchronized (mParkingLots) {
-			ArrayList<ParkingLot> clone = new ArrayList<ParkingLot>(
-					mParkingLots);
 
 			Log.d("getClosestParkingLots", "in method");
 
-			for (ParkingLot parkingLot : clone) {
+			for (ParkingLot parkingLot : mParkingLots) {
 				parkingLot.setDistanceFromReferencePoint(MathUtils.getDistance(
 						latitude, longitude, parkingLot.getLatitude(),
 						parkingLot.getLongitude()));
@@ -89,15 +87,19 @@ public class GreenPSpots {
 
 			try {
 				GreenPSpotComparator greenPComparator = new GreenPSpotComparator();
-				Collections.sort(clone, greenPComparator);				
+				Collections.sort(mParkingLots, greenPComparator);				
 			} catch (Exception e) {
 				Log.d("getClosestParkingLots", "exception occurred " + e.getMessage());
 			}
 			
 			Log.d("getClosestParkingLots", "finished sorting");
 
-			return clone.subList(0, 10);
+			return mParkingLots.subList(0, 10);
     	}
+    }
+    
+    public List<ParkingLot> getParkingLots() {
+    	return mParkingLots;
     }
 
     /**

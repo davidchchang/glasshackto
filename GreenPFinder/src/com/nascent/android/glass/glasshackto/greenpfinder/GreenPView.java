@@ -221,7 +221,7 @@ public class GreenPView extends View {
 		// canvas.restore();
 
 		mPaint.setTextSize(48);
-		mPaint.setColor(FONT_COLOR);
+		mPaint.setColor(Color.WHITE);
 
 		double latitude1 = 0, longitude1 = 0;
 
@@ -235,12 +235,19 @@ public class GreenPView extends View {
 
 		ParkingLot nearestParkingLot = mClosestParkingLot.get(0);
 		String direction = "Your nearest Green P is: \n"
-				+ nearestParkingLot.getAddress() + "\n\n" 
+				+ nearestParkingLot.getAddress() + "\n" 
 				+ "(" + MathUtils.round(nearestParkingLot.getDistanceFromReferencePoint(), 2) + "km)\n\n"
-				+ nearestParkingLot.getRate();
+				+ nearestParkingLot.getRate() + "";
 		mPaint.getTextBounds(direction, 0, direction.length(), mTextBounds);
 
 		drawMultilineText(direction, 100, mTextBounds.height(), mPaint, canvas);
+		
+		mPaint.setTextSize(30);
+		mPaint.setColor(Color.YELLOW);
+		
+		direction = "Tap to go";
+		mPaint.getTextBounds(direction, 0, direction.length(), mTextBounds);
+		drawMultilineText(direction, 480, getHeight() - 40, mPaint, canvas);
 
 		// TODO: find closest green P parking lot
 		// direction = "Your closest Green P Parking lot is: ";

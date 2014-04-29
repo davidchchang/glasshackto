@@ -17,13 +17,17 @@
 package com.nascent.android.glass.glasshackto.greenpfinder;
 
 import com.google.android.glass.timeline.DirectRenderingCallback;
+import com.google.android.glass.timeline.LiveCard;
 import com.nascent.android.glass.glasshackto.greenpfinder.R;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.GreenPSpots;
 import com.nascent.android.glass.glasshackto.greenpfinder.model.ParkingLot;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.location.Location;
+import android.net.Uri;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -72,6 +76,8 @@ public class GreenPRenderer implements DirectRenderingCallback {
     private final TextView mTipsView;
     private final OrientationManager mOrientationManager;
     private final GreenPSpots mGreenPSpots;
+    private final LiveCard mLiveCard;
+    private final Context mContext;
 
     private final OrientationManager.OnChangedListener mChangeListener =
             new OrientationManager.OnChangedListener() {
@@ -112,7 +118,7 @@ public class GreenPRenderer implements DirectRenderingCallback {
      * orientation manager, and landmark collection.
      */
     public GreenPRenderer(Context context, OrientationManager orientationManager,
-                GreenPSpots landmarks) {
+                GreenPSpots parkingLots, LiveCard liveCard) {
         LayoutInflater inflater = LayoutInflater.from(context);
         mLayout = (FrameLayout) inflater.inflate(R.layout.greenp, null);
         mLayout.setWillNotDraw(false);
@@ -122,9 +128,12 @@ public class GreenPRenderer implements DirectRenderingCallback {
         mTipsView = (TextView) mLayout.findViewById(R.id.tips_view);
 
         mOrientationManager = orientationManager;
-        mGreenPSpots = landmarks;
+        mGreenPSpots = parkingLots;
 
         mGreenPView.setOrientationManager(mOrientationManager);
+        
+        mContext = context;
+        mLiveCard = liveCard;
     }
 
     @Override
@@ -171,6 +180,13 @@ public class GreenPRenderer implements DirectRenderingCallback {
                     List<ParkingLot> nearbyPlaces = mGreenPSpots.getClosestParkingLots(
                         location.getLatitude(), location.getLongitude());
                     mGreenPView.setClosestParkingLots(nearbyPlaces);
+                    
+                    ParkingLot closestParkingLot = nearbyPlaces.get(0);
+                    Intent navIntent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("google.navigation:ll=" + closestParkingLot.getLatitude() + "," + closestParkingLot.getLongitude() + "&title=" + closestParkingLot.getAddress()));
+//                    Intent menuIntent = new Intent(this, GreenPMenuActivity.class);
+//                    menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    mLiveCard.setAction(PendingIntent.getActivity(mContext, 0, navIntent, 0));
                 }
 
                 mRenderThread = new RenderThread();
