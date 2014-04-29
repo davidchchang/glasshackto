@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.speech.tts.TextToSpeech;
@@ -122,9 +123,12 @@ public class GreenPService extends Service {
             mLiveCard.setDirectRenderingEnabled(true).getSurfaceHolder().addCallback(mRenderer);
 
             // Display the options menu when the live card is tapped.
-            Intent menuIntent = new Intent(this, GreenPMenuActivity.class);
-            menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mLiveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0));
+            Intent navIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("google.navigation:ll=37.4219795,-122.0836669&title=Googleplex"));
+            
+//            Intent menuIntent = new Intent(this, GreenPMenuActivity.class);
+//            menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            mLiveCard.setAction(PendingIntent.getActivity(this, 0, navIntent, 0));
             mLiveCard.attach(this);
             mLiveCard.publish(PublishMode.REVEAL);
         } else {

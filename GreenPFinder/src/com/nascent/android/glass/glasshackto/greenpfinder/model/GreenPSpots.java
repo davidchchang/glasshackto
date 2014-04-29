@@ -87,9 +87,13 @@ public class GreenPSpots {
 
 			Log.d("getClosestParkingLots", "finished setting distances");
 
-//			GreenPSpotComparator greenPComparator = new GreenPSpotComparator();
-//			Collections.sort(clone, greenPComparator);
-
+			try {
+				GreenPSpotComparator greenPComparator = new GreenPSpotComparator();
+				Collections.sort(clone, greenPComparator);				
+			} catch (Exception e) {
+				Log.d("getClosestParkingLots", "exception occurred " + e.getMessage());
+			}
+			
 			Log.d("getClosestParkingLots", "finished sorting");
 
 			return clone.subList(0, 10);

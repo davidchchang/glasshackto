@@ -12,7 +12,6 @@ public class GreenPSpotComparator implements Comparator<ParkingLot> {
 	
 	@Override
 	public int compare(ParkingLot arg0, ParkingLot arg1) {
-		Log.d("test", "sorting " + new Date());
 		float distance1 = arg0.getDistanceFromReferencePoint();
 		float distance2 = arg1.getDistanceFromReferencePoint();
 		return (int) (distance1 - distance2);
