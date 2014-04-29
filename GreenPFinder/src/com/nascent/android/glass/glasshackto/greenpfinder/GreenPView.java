@@ -233,11 +233,14 @@ public class GreenPView extends View {
 			Log.d("Error", String.format("%s", e.getMessage()));
 		}
 
-		String direction = "Your coordinate is: \n" + latitude1 + ", "
-				+ longitude1;
+		ParkingLot nearestParkingLot = mClosestParkingLot.get(0);
+		String direction = "Your nearest Green P is: \n"
+				+ nearestParkingLot.getAddress() + "\n\n" 
+				+ "(" + MathUtils.round(nearestParkingLot.getDistanceFromReferencePoint(), 2) + "km)\n\n"
+				+ nearestParkingLot.getRate();
 		mPaint.getTextBounds(direction, 0, direction.length(), mTextBounds);
 
-		drawMultilineText(direction, 0, mTextBounds.height(), mPaint, canvas);
+		drawMultilineText(direction, 100, mTextBounds.height(), mPaint, canvas);
 
 		// TODO: find closest green P parking lot
 		// direction = "Your closest Green P Parking lot is: ";

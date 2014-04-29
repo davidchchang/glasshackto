@@ -16,6 +16,8 @@
 
 package com.nascent.android.glass.glasshackto.greenpfinder.util;
 
+import java.math.BigDecimal;
+
 /**
  * A utility class containing arithmetic and geometry helper methods.
  */
@@ -115,5 +117,11 @@ public class MathUtils {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return (float) (EARTH_RADIUS_KM * c);
+    }
+    
+    public static BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);       
+        return bd;
     }
 }

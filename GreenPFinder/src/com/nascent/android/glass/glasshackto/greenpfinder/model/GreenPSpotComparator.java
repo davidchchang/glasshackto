@@ -1,9 +1,6 @@
 package com.nascent.android.glass.glasshackto.greenpfinder.model;
 
 import java.util.Comparator;
-import java.util.Date;
-
-import android.util.Log;
 
 public class GreenPSpotComparator implements Comparator<ParkingLot> {
 	

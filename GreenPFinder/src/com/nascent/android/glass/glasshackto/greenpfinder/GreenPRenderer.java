@@ -83,7 +83,7 @@ public class GreenPRenderer implements DirectRenderingCallback {
             boolean oldTooSteep = mTooSteep;
             mTooSteep = (Math.abs(orientationManager.getPitch()) > TOO_STEEP_PITCH_DEGREES);
             if (mTooSteep != oldTooSteep) {
-                updateTipsView();
+//                updateTipsView();
             }
         }
 
@@ -103,7 +103,7 @@ public class GreenPRenderer implements DirectRenderingCallback {
         @Override
         public void onAccuracyChanged(OrientationManager orientationManager) {
             mInterference = orientationManager.hasInterference();
-            updateTipsView();
+//            updateTipsView();
         }
     };
 
